@@ -9,7 +9,7 @@ router.post('/person', (req, res) => {
     person
         .save()
         .then((data) => {
-            res.json(data)
+            res.json(data);
         })
         .catch((error) => {
             res.json({ message: error });
@@ -18,9 +18,10 @@ router.post('/person', (req, res) => {
 
 /* Listar todos los usuarios */
 router.get('/', (req, res) => {
-    personSchema.find()
+    personSchema
+        .find()
         .then((data) => {
-            res.json(data)
+            res.json(data);
         })
         .catch((error) => {
             res.json({ message: error });
@@ -28,10 +29,11 @@ router.get('/', (req, res) => {
 });
 /* Consultar un usuario especifico */
 router.get('/:personId', (req, res) => {
-    const { personId } = req.params
-    personSchema.findById(personId)
+    const { personId } = req.params;
+    personSchema
+        .findById(personId)
         .then((data) => {
-            res.json(data)
+            res.json(data);
         })
         .catch((error) => {
             res.json({ message: error });
@@ -40,11 +42,10 @@ router.get('/:personId', (req, res) => {
 /* Editar un usuario especifico */
 router.put('/:personId', (req, res) => {
     const { personId } = req.params;
-    const { name, address = ({ city, code_zip }) } = req.body
-    personSchema
-        .updateOne({ _id: personId }, { $set: { name, address } })
+    const { client_name, address = ({ city, code_zip, geo }), contact = ({ email, cellphone }) } = req.body
+    personSchema.updateOne({ _id: personId }, { $set: { client_name, address, contact } })
         .then((data) => {
-            res.json(data)
+            res.json(data);
         })
         .catch((error) => {
             res.json({ message: error });
@@ -56,13 +57,11 @@ router.delete('/:personId', (req, res) => {
     personSchema
         .remove({ _id: personId })
         .then((data) => {
-            res.json(data)
+            res.json(data);
         })
         .catch((error) => {
             res.json({ message: error });
         });
 });
-
-
 
 module.exports = router;
